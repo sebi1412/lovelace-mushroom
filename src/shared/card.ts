@@ -48,7 +48,7 @@ export class Card extends LitElement {
         flex-direction: row;
       }
       .container.horizontal > ::slotted(*) {
-        flex: 1;
+        
         min-width: 0;
       }
       .container.horizontal > ::slotted(*.actions) {

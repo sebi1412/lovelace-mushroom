@@ -219,7 +219,8 @@ export class MushroomBaseCard<
     stateObj: HassEntity,
     appearance: Appearance,
     name: string,
-    state?: string
+    state?: string,
+    lastseen?: HassEntity
   ): TemplateResult | null {
     const defaultState = this.hass.formatEntityState
       ? this.hass.formatEntityState(stateObj)
@@ -237,7 +238,8 @@ export class MushroomBaseCard<
       name,
       displayState,
       stateObj,
-      this.hass
+      this.hass,
+      lastseen
     );
 
     const secondary = computeInfoDisplay(
@@ -245,7 +247,8 @@ export class MushroomBaseCard<
       name,
       displayState,
       stateObj,
-      this.hass
+      this.hass,
+      lastseen
     );
 
     return html`

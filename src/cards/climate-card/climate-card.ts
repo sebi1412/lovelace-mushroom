@@ -51,6 +51,8 @@ import {
   getHvacActionIcon,
   getHvacModeColor,
 } from "./utils";
+import { HassEntity } from "home-assistant-js-websocket";
+import { formatDuration } from "../../ha/common/datetime/duration";
 
 type ClimateCardControl = "temperature_control" | "hvac_mode_control";
 
@@ -151,14 +153,30 @@ export class ClimateCard
     handleAction(this, this.hass!, this._config!, ev.detail.action!);
   }
 
+  protected get _PIEObj(): HassEntity | undefined {
+    if (!this._config || !this.hass || !this._config.entity) return undefined;
+
+    const entityId = this._config.PIE;
+    return this.hass.states[entityId] as HassEntity;
+  }
+
+  protected get _LSEObj(): HassEntity | undefined {
+    if (!this._config || !this.hass || !this._config.entity) return undefined;
+
+    const entityId = this._config.LSE;
+    return this.hass.states[entityId] as HassEntity;
+  }
+
   protected render() {
     if (!this.hass || !this._config || !this._config.entity) {
       return nothing;
     }
 
     const stateObj = this._stateObj;
+    const PIEobj = this._PIEObj;
+    const LSEobj = this._LSEObj;
 
-    if (!stateObj) {
+    if (!stateObj || !PIEobj || !LSEobj) {
       return this.renderNotFound(this._config);
     }
 
@@ -184,6 +202,9 @@ export class ClimateCard
       const unit = this.hass.config.unit_system.temperature;
       stateDisplay += ` - ${temperature} ${unit}`;
     }
+    
+    let PIEDisplay = this.hass.formatEntityState(PIEobj);
+    stateDisplay += ` - ${PIEDisplay}`;
     const rtl = computeRTL(this.hass);
 
     const isControlVisible =
@@ -208,7 +229,7 @@ export class ClimateCard
               ? this.renderPicture(picture)
               : this.renderIcon(stateObj, icon)}
             ${this.renderBadge(stateObj)}
-            ${this.renderStateInfo(stateObj, appearance, name, stateDisplay)};
+            ${this.renderStateInfo(stateObj, appearance, name, stateDisplay, LSEobj)};
           </mushroom-state-item>
           ${isControlVisible
             ? html`
@@ -328,6 +349,7 @@ export class ClimateCard
         mushroom-climate-temperature-control,
         mushroom-climate-hvac-modes-control {
           flex: 1;
+          min-width: 108px;
         }
       `,
     ];
