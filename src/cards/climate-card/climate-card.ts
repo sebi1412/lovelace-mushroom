@@ -51,8 +51,10 @@ import {
   getHvacActionIcon,
   getHvacModeColor,
 } from "./utils";
+import "../../ha/common/number/format_number";
 import { HassEntity } from "home-assistant-js-websocket";
 import { formatDuration } from "../../ha/common/datetime/duration";
+import { number } from "superstruct";
 
 type ClimateCardControl = "temperature_control" | "hvac_mode_control";
 
@@ -228,7 +230,7 @@ export class ClimateCard
             ${picture
               ? this.renderPicture(picture)
               : this.renderIcon(stateObj, icon)}
-            ${this.renderBadge(stateObj)}
+            ${this.renderBadge(PIEobj)}
             ${this.renderStateInfo(stateObj, appearance, name, stateDisplay, LSEobj)};
           </mushroom-state-item>
           ${isControlVisible
@@ -266,13 +268,64 @@ export class ClimateCard
     `;
   }
 
-  protected renderBadge(entity: ClimateEntity) {
+  protected renderBadge(entity: HassEntity) {
     const unavailable = !isAvailable(entity);
     if (unavailable) {
       return super.renderBadge(entity);
     } else {
-      return this.renderActionBadge(entity);
+      return this.renderStellBadge(entity);
     }
+  }
+
+  renderStellBadge(entity: HassEntity){
+    const pi =  parseFloat(formatNumber(entity.state))
+
+    const e = entity
+    const hvac_action = "cooling"
+
+    let color = "var(--rgb-state-climate-off)"; //getHvacActionColor(hvac_action);
+    let icon = "mdi:progress-question";
+
+    switch (true) {
+      case (pi == 0):
+        icon = "mdi:numeric-0-circle";
+        color = "var(--rgb-state-climate-off)";
+        break;
+      case (pi < 21):
+        icon = "mdi:numeric-1-circle";
+        color = "var(--rgb-blue)";
+        break;
+      case (pi < 41):
+        icon = "mdi:numeric-2-circle";
+        color = "var(--rgb-amber)";
+        break;
+      case (pi < 61):
+        icon = "mdi:numeric-3-circle";
+        color = "var(--rgb-orange)";
+        break;
+      case (pi < 81):
+        icon = "mdi:numeric-4-circle";
+        color = "var(--rgb-red)";
+        break;
+      case (pi < 101):
+        icon = "mdi:numeric-5-circle";
+        color = "var(--rgb-purple)";
+        break;
+      default:
+        icon = "mdi:progress-question";
+        color = "var(--rgb-state-climate-off)";
+        break;
+    }
+
+    return html`
+      <mushroom-badge-icon
+        slot="badge"
+        .icon=${icon}
+        style=${styleMap({
+          "--main-color": `rgb(${color})`,
+        })}
+      ></mushroom-badge-icon>
+    `;
   }
 
   renderActionBadge(entity: ClimateEntity) {
