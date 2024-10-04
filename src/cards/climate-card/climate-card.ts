@@ -162,12 +162,6 @@ export class ClimateCard
     return this.hass.states[entityId] as HassEntity;
   }
 
-  protected get _LSEObj(): HassEntity | undefined {
-    if (!this._config || !this.hass || !this._config.entity) return undefined;
-
-    const entityId = this._config.LSE;
-    return this.hass.states[entityId] as HassEntity;
-  }
 
   protected render() {
     if (!this.hass || !this._config || !this._config.entity) {
@@ -176,9 +170,8 @@ export class ClimateCard
 
     const stateObj = this._stateObj;
     const PIEobj = this._PIEObj;
-    const LSEobj = this._LSEObj;
 
-    if (!stateObj || !PIEobj || !LSEobj) {
+    if (!stateObj || !PIEobj) {
       return this.renderNotFound(this._config);
     }
 

@@ -42,7 +42,6 @@ export const climateCardConfigStruct = assign(
   ),
   object({
     PIE: optional(string()),
-    LSE: optional(string()),
     show_temperature_control: optional(boolean()),
     hvac_modes: optional(array(string())),
     collapsible_controls: optional(boolean()),
