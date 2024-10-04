@@ -231,7 +231,7 @@ export class ClimateCard
               ? this.renderPicture(picture)
               : this.renderIcon(stateObj, icon)}
             ${this.renderBadge(PIEobj)}
-            ${this.renderStateInfo(stateObj, appearance, name, stateDisplay, LSEobj)};
+            ${this.renderStateInfo(stateObj, appearance, name, stateDisplay)};
           </mushroom-state-item>
           ${isControlVisible
             ? html`

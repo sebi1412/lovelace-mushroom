@@ -215,12 +215,18 @@ export class MushroomBaseCard<
       : nothing;
   }
 
+  protected get _LSObject(): HassEntity | undefined {
+    if (!this._config || !this.hass || !this._config.last_seen) return undefined;
+
+    const entityId = this._config.last_seen;
+    return this.hass.states[entityId] as HassEntity;
+  }
+
   protected renderStateInfo(
     stateObj: HassEntity,
     appearance: Appearance,
     name: string,
-    state?: string,
-    lastseen?: HassEntity
+    state?: string
   ): TemplateResult | null {
     const defaultState = this.hass.formatEntityState
       ? this.hass.formatEntityState(stateObj)
@@ -238,8 +244,7 @@ export class MushroomBaseCard<
       name,
       displayState,
       stateObj,
-      this.hass,
-      lastseen
+      this.hass
     );
 
     const secondary = computeInfoDisplay(
@@ -248,7 +253,7 @@ export class MushroomBaseCard<
       displayState,
       stateObj,
       this.hass,
-      lastseen
+      this._LSObject
     );
 
     return html`

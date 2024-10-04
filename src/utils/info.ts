@@ -42,7 +42,7 @@ export function computeInfoDisplay(
             capitalize
           ></ha-relative-time>
         `;
-      } else {
+      } else { //return state
         if(lastseen != null)
         {
           return html`

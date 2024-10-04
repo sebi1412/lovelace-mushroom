@@ -49,6 +49,7 @@
         "primary_info": "Primäre Information",
         "secondary_info": "Sekundäre Information",
         "icon_type": "Icon-Typ",
+        "last_seen": "Last Seen",
         "content_info": "Inhalt",
         "use_entity_picture": "Entitätsbild verwenden?",
         "collapsible_controls": "Schieberegler einklappen, wenn aus",
