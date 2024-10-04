@@ -162,6 +162,13 @@ export class ClimateCard
     return this.hass.states[entityId] as HassEntity;
   }
 
+  protected get _Window_DetectObj(): HassEntity | undefined {
+    if (!this._config || !this.hass || !this._config.entity) return undefined;
+
+    const entityId = this._config.Window_Detect;
+    return this.hass.states[entityId] as HassEntity;
+  }
+
 
   protected render() {
     if (!this.hass || !this._config || !this._config.entity) {
@@ -170,8 +177,9 @@ export class ClimateCard
 
     const stateObj = this._stateObj;
     const PIEobj = this._PIEObj;
+    const Window_DetectObj = this._Window_DetectObj;
 
-    if (!stateObj || !PIEobj) {
+    if (!stateObj || !PIEobj || !Window_DetectObj) {
       return this.renderNotFound(this._config);
     }
 
@@ -222,7 +230,7 @@ export class ClimateCard
           >
             ${picture
               ? this.renderPicture(picture)
-              : this.renderIcon(stateObj, icon)}
+              : this.renderIcon(stateObj, icon, Window_DetectObj)}
             ${this.renderBadge(PIEobj)}
             ${this.renderStateInfo(stateObj, appearance, name, stateDisplay)};
           </mushroom-state-item>
@@ -239,12 +247,21 @@ export class ClimateCard
     `;
   }
 
-  protected renderIcon(stateObj: ClimateEntity, icon?: string): TemplateResult {
+  protected renderIcon(stateObj: ClimateEntity, icon?: string, WindowObj? : HassEntity): TemplateResult {
     const available = isAvailable(stateObj);
-    const color = getHvacModeColor(stateObj.state as HvacMode);
+    let color = getHvacModeColor(stateObj.state as HvacMode);
+    const Window_DetectObj = WindowObj ?? undefined
     const iconStyle = {};
+    if(WindowObj?.state == 'on')
+    {
+      icon = "mdi:window-open-variant";
+      color = "var(--rgb-state-climate-cool)";
+    }
+    
     iconStyle["--icon-color"] = `rgb(${color})`;
     iconStyle["--shape-color"] = `rgba(${color}, 0.2)`;
+
+   
 
     return html`
       <mushroom-shape-icon

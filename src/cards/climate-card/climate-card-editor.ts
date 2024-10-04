@@ -25,6 +25,7 @@ const computeSchema = memoizeOne((localize: LocalizeFunc): HaFormSchema[] => [
   { name: "icon", selector: { icon: {} }, context: { icon_entity: "entity" } },
   ...APPEARANCE_FORM_SCHEMA,
   { name: "PIE", selector: { entity: {} } },
+  { name: "Window_Detect", selector: { entity: {} } },
   {
     type: "grid",
     name: "",
