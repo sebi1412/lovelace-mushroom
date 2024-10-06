@@ -20,6 +20,7 @@ export * from "./common/util/debounce";
 export * from "./common/util/deep-equal";
 export * from "./common/util/render-status";
 export * from "./data/climate";
+export * from "./data/sensor";
 export * from "./data/cover";
 export * from "./data/entity";
 export * from "./data/fan";

@@ -47,6 +47,7 @@ export class MushroomButtonGroup extends LitElement {
         flex-shrink: 1;
         flex-basis: calc(var(--control-height) * var(--control-button-ratio));
       }
+      .container > ::slotted(mushroom-output-number), 
       .container > ::slotted(mushroom-input-number) {
         width: 0;
         flex-grow: 0;
@@ -56,6 +57,7 @@ export class MushroomButtonGroup extends LitElement {
         );
       }
       .container.fill > ::slotted(mushroom-button),
+      .container > ::slotted(mushroom-output-number), 
       .container.fill > ::slotted(mushroom-input-number) {
         flex-grow: 1;
       }
