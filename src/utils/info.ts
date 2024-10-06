@@ -70,7 +70,7 @@ export function computeInfoDisplay(
       return html`
         <ha-relative-time
           .hass=${hass}
-          .datetime=${stateObj.last_updated}
+          .datetime=${lastseen?.state}
           capitalize
         ></ha-relative-time>
       `;

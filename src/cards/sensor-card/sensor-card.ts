@@ -63,12 +63,21 @@ export class EntityCard
     handleAction(this, this.hass!, this._config!, ev.detail.action!);
   }
 
+  protected get _secondObj(): SensorEntity | undefined {
+    if (!this._config || !this.hass || !this._config.entity || !this._config.second_Value) return undefined;
+
+    const entityId = this._config.second_Value;
+    return this.hass.states[entityId] as SensorEntity;
+  }
+
+
   protected render() {
     if (!this._config || !this.hass || !this._config.entity) {
       return nothing;
     }
 
     const stateObj = this._stateObj;
+    const secondObj =  this._secondObj;
 
     if (!stateObj) {
       return this.renderNotFound(this._config);
@@ -110,6 +119,17 @@ export class EntityCard
             >
             </mushroom-sensor-value-control>
           </div>
+          ${secondObj ? html`
+          <div class="actions" ?rtl=${rtl}>
+            <mushroom-sensor-value-control
+              .hass=${this.hass}
+              .entity=${secondObj}
+              .fill=${appearance.layout !== "horizontal"}
+            >
+            </mushroom-sensor-value-control>
+          </div>
+          `
+          :nothing}
         </mushroom-card>
       </ha-card>
     `;

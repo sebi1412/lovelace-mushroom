@@ -14,6 +14,7 @@ import { SensorCardConfig, sensorCardConfigStruct } from "./sensorcard-config";
 
 const SCHEMA: HaFormSchema[] = [
   { name: "entity", selector: { entity: { domain: SENSOR_ENTITY_DOMAINS} } },
+  { name: "second_Value", selector: { entity: { domain: SENSOR_ENTITY_DOMAINS} } },
   { name: "name", selector: { text: {} } },
   {
     type: "grid",

@@ -18,6 +18,7 @@ export type SensorCardConfig = LovelaceCardConfig &
   EntitySharedConfig &
   AppearanceSharedConfig &
   ActionsSharedConfig & {
+    second_Value?: string;
     icon_color?: string;
   };
 
@@ -29,6 +30,7 @@ export const sensorCardConfigStruct = assign(
     actionsSharedConfigStruct
   ),
   object({
+    second_Value: optional(string()),
     icon_color: optional(string()),
   })
 );
