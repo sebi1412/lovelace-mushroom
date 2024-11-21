@@ -79,6 +79,8 @@ export class EntityCard
     const stateObj = this._stateObj;
     const secondObj =  this._secondObj;
 
+    
+
     if (!stateObj) {
       return this.renderNotFound(this._config);
     }
