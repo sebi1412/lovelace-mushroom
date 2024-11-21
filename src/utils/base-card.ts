@@ -287,6 +287,13 @@ export class MushroomBaseCard<
       : nothing;
   }
 
+  protected get _LSObject(): HassEntity | undefined {
+    if (!this._config || !this.hass || !this._config.last_seen) return undefined;
+
+    const entityId = this._config.last_seen;
+    return this.hass.states[entityId] as HassEntity;
+  }
+
   protected renderStateInfo(
     stateObj: HassEntity,
     appearance: Appearance,
@@ -317,7 +324,8 @@ export class MushroomBaseCard<
       name,
       displayState,
       stateObj,
-      this.hass
+      this.hass,
+      this._LSObject
     );
 
     return html`

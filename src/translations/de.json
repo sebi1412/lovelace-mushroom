@@ -27,6 +27,7 @@
         "icon_animation": "Icon animieren, wenn aktiv?",
         "icon_color": "Icon-Farbe",
         "icon_type": "Icon-Typ",
+        "last_seen": "Last Seen",
         "layout": "Layout",
         "primary_info": "Primäre Information",
         "secondary_info": "Sekundäre Information",
