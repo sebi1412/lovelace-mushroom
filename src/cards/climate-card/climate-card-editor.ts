@@ -17,7 +17,7 @@ import {
 } from "./climate-card-config";
 import { CLIMATE_CARD_EDITOR_NAME, CLIMATE_ENTITY_DOMAINS } from "./const";
 
-const CLIMATE_LABELS = ["hvac_modes", "show_temperature_control"] as string[];
+const CLIMATE_LABELS = ["hvac_modes", "show_temperature_control", "PIE", "Window_Detect"] as string[];
 
 const computeSchema = memoizeOne((localize: LocalizeFunc): HaFormSchema[] => [
   { name: "entity", selector: { entity: { domain: CLIMATE_ENTITY_DOMAINS } } },
