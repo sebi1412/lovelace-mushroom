@@ -224,7 +224,7 @@ export interface HomeAssistant {
   formatEntityAttributeValue(
     stateObj: HassEntity,
     attribute: string,
-    value?: any
+    value?: string
   ): string;
   formatEntityAttributeName(stateObj: HassEntity, attribute: string): string;
 }

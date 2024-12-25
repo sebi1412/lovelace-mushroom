@@ -12,7 +12,9 @@ import { styleMap } from "lit/directives/style-map.js";
 import {
   actionHandler,
   ActionHandlerEvent,
+  blankBeforePercent,
   computeRTL,
+  computeStateDisplay,
   CoverEntity,
   handleAction,
   hasAction,
@@ -193,14 +195,17 @@ export class CoverCard
     const appearance = computeAppearance(this._config);
     const picture = computeEntityPicture(stateObj, appearance.icon_type);
 
-    let stateDisplay = this.hass.formatEntityState(stateObj);
+    let stateDisplay = this.hass.formatEntityState
+      ? this.hass.formatEntityState(stateObj)
+      : computeStateDisplay(
+          this.hass.localize,
+          stateObj,
+          this.hass.locale,
+          this.hass.config,
+          this.hass.entities
+        );
     if (this.position) {
-      const position = this.hass.formatEntityAttributeValue(
-        stateObj,
-        "current_position",
-        this.position
-      );
-      stateDisplay += ` ⸱ ${position}`;
+      stateDisplay += ` - ${this.position}${blankBeforePercent(this.hass.locale)}%`;
     }
 
     const rtl = computeRTL(this.hass);

@@ -4,7 +4,9 @@ import { classMap } from "lit/directives/class-map.js";
 import {
   actionHandler,
   ActionHandlerEvent,
+  blankBeforePercent,
   computeRTL,
+  computeStateDisplay,
   handleAction,
   hasAction,
   HomeAssistant,
@@ -108,14 +110,17 @@ export class HumidifierCard
     const appearance = computeAppearance(this._config);
     const picture = computeEntityPicture(stateObj, appearance.icon_type);
 
-    let stateDisplay = this.hass.formatEntityState(stateObj);
+    let stateDisplay = this.hass.formatEntityState
+      ? this.hass.formatEntityState(stateObj)
+      : computeStateDisplay(
+          this.hass.localize,
+          stateObj,
+          this.hass.locale,
+          this.hass.config,
+          this.hass.entities
+        );
     if (this.humidity) {
-      const humidity = this.hass.formatEntityAttributeValue(
-        stateObj,
-        "current_humidity",
-        this.humidity
-      );
-      stateDisplay = humidity;
+      stateDisplay = `${this.humidity}${blankBeforePercent(this.hass.locale)}%`;
     }
 
     const rtl = computeRTL(this.hass);
