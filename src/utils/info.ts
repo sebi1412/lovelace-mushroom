@@ -21,7 +21,8 @@ export function computeInfoDisplay(
   name: string,
   state: string,
   stateObj: HassEntity,
-  hass: HomeAssistant
+  hass: HomeAssistant,
+  lastseen?: HassEntity
 ) {
   switch (info) {
     case "name":
@@ -41,8 +42,21 @@ export function computeInfoDisplay(
             capitalize
           ></ha-relative-time>
         `;
-      } else {
-        return state;
+      } else { //return state
+        if(lastseen != null)
+        {
+          return html`
+          ${state} - <ha-relative-time
+            .hass=${hass}
+            .datetime=${lastseen?.state}
+            capitalize
+          ></ha-relative-time>
+        `;
+        }
+        else
+        {
+          return state
+        }
       }
     case "last-changed":
       return html`
@@ -56,7 +70,7 @@ export function computeInfoDisplay(
       return html`
         <ha-relative-time
           .hass=${hass}
-          .datetime=${stateObj.last_updated}
+          .datetime=${lastseen?.state}
           capitalize
         ></ha-relative-time>
       `;

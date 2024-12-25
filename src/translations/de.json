@@ -9,7 +9,9 @@
       },
       "climate": {
         "hvac_modes": "HVAC-Modi",
-        "show_temperature_control": "Temperatursteuerung?"
+        "show_temperature_control": "Temperatursteuerung?",
+        "Window_Detect" : "Fenster offen Entity",
+        "PIE" : "PI Ventil Einstellung Entity"
       },
       "cover": {
         "show_buttons_control": "Schaltflächensteuerung?",
@@ -28,6 +30,7 @@
         "icon_animation": "Icon animieren, wenn aktiv?",
         "icon_color": "Icon-Farbe",
         "icon_type": "Icon-Typ",
+        "last_seen": "Last Seen",
         "layout": "Layout",
         "primary_info": "Primäre Information",
         "secondary_info": "Sekundäre Information",

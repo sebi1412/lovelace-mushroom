@@ -330,6 +330,7 @@ export class CoverCard
         mushroom-cover-buttons-control,
         mushroom-cover-position-control {
           flex: 1;
+          min-width: 128px;
         }
         mushroom-cover-tilt-position-control {
           flex: 1;
