@@ -156,14 +156,14 @@ export class ClimateCard
   }
 
   protected get _PIEObj(): HassEntity | undefined {
-    if (!this._config || !this.hass || !this._config.entity) return undefined;
+    if (!this._config || !this.hass || !this._config.PIE) return undefined;
 
     const entityId = this._config.PIE;
     return this.hass.states[entityId] as HassEntity;
   }
 
   protected get _Window_DetectObj(): HassEntity | undefined {
-    if (!this._config || !this.hass || !this._config.entity) return undefined;
+    if (!this._config || !this.hass || !this._config.Window_Detect) return undefined;
 
     const entityId = this._config.Window_Detect;
     return this.hass.states[entityId] as HassEntity;
@@ -179,7 +179,7 @@ export class ClimateCard
     const PIEobj = this._PIEObj;
     const Window_DetectObj = this._Window_DetectObj;
 
-    if (!stateObj || !PIEobj || !Window_DetectObj) {
+    if (!stateObj) { /*|| !PIEobj || !Window_DetectObj*/
       return this.renderNotFound(this._config);
     }
 
@@ -206,8 +206,11 @@ export class ClimateCard
       stateDisplay += ` - ${temperature} ${unit}`;
     }
     
-    let PIEDisplay = this.hass.formatEntityState(PIEobj);
-    stateDisplay += ` - ${PIEDisplay}`;
+    if(PIEobj){
+      let PIEDisplay = this.hass.formatEntityState(PIEobj);
+      stateDisplay += ` - ${PIEDisplay}`;
+    }
+
     const rtl = computeRTL(this.hass);
 
     const isControlVisible =
@@ -231,7 +234,7 @@ export class ClimateCard
             ${picture
               ? this.renderPicture(picture)
               : this.renderIcon(stateObj, icon, Window_DetectObj)}
-            ${this.renderBadge(PIEobj)}
+            ${PIEobj ? this.renderBadge(PIEobj) : nothing}
             ${this.renderStateInfo(stateObj, appearance, name, stateDisplay)};
           </mushroom-state-item>
           ${isControlVisible
@@ -250,9 +253,9 @@ export class ClimateCard
   protected renderIcon(stateObj: ClimateEntity, icon?: string, WindowObj? : HassEntity): TemplateResult {
     const available = isAvailable(stateObj);
     let color = getHvacModeColor(stateObj.state as HvacMode);
-    const Window_DetectObj = WindowObj ?? undefined
+    /* const Window_DetectObj = WindowObj ?? undefined */
     const iconStyle = {};
-    if(WindowObj?.state == 'on')
+    if(WindowObj && WindowObj?.state == 'on')
     {
       icon = "mdi:window-open-variant";
       color = "var(--rgb-state-climate-cool)";
