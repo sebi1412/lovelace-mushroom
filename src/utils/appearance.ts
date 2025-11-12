@@ -11,12 +11,13 @@ export function computeAppearance(
   config: AppearanceSharedConfig & AdditionalConfig
 ): Appearance {
   return {
-    layout: config.layout ?? getDefaultLayout(config),
+  layout: config.layout ?? getDefaultLayout(config),
     fill_container: config.fill_container ?? false,
-    primary_info: config.primary_info || getDefaultPrimaryInfo(config),
-    secondary_info: config.secondary_info || getDefaultSecondaryInfo(config),
-    icon_type: config.icon_type || getDefaultIconType(config),
-  };
+    primary_info: config.primary_info ?? getDefaultPrimaryInfo(config),
+    secondary_info: config.secondary_info ?? getDefaultSecondaryInfo(config),
+    icon_type: config.icon_type ?? getDefaultIconType(config),
+    last_seen: config.last_seen ?? "",
+  } as Appearance;
 }
 
 function getDefaultLayout(config: AdditionalConfig): Layout {
