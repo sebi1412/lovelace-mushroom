@@ -1,4 +1,4 @@
-import { boolean, enums, Infer, object, optional } from "superstruct";
+import { boolean, enums, Infer, object, optional, string } from "superstruct";
 import { HaFormSchema } from "../../utils/form/ha-form";
 import { IconType, ICON_TYPES, Info, INFOS } from "../../utils/info";
 import { Layout, layoutStruct } from "../../utils/layout";
@@ -9,6 +9,7 @@ export const appearanceSharedConfigStruct = object({
   primary_info: optional(enums(INFOS)),
   secondary_info: optional(enums(INFOS)),
   icon_type: optional(enums(ICON_TYPES)),
+  last_seen: optional(string())
 });
 
 export type AppearanceSharedConfig = Infer<typeof appearanceSharedConfigStruct>;
@@ -19,6 +20,7 @@ export type Appearance = {
   primary_info: Info;
   secondary_info: Info;
   icon_type: IconType;
+  last_seen: string;
 };
 
 export const APPEARANCE_FORM_SCHEMA: HaFormSchema[] = [
@@ -37,6 +39,7 @@ export const APPEARANCE_FORM_SCHEMA: HaFormSchema[] = [
       { name: "primary_info", selector: { mush_info: {} } },
       { name: "secondary_info", selector: { mush_info: {} } },
       { name: "icon_type", selector: { mush_icon_type: {} } },
+      { name: "last_seen", selector: { entity: {} } },
     ],
   },
 ];

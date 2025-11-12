@@ -16,7 +16,8 @@ export function computeAppearance(
     primary_info: config.primary_info ?? getDefaultPrimaryInfo(config),
     secondary_info: config.secondary_info ?? getDefaultSecondaryInfo(config),
     icon_type: config.icon_type ?? getDefaultIconType(config),
-  };
+    last_seen: config.last_seen ?? "",
+  } as Appearance;
 }
 
 function getDefaultLayout(config: AdditionalConfig): Layout {
