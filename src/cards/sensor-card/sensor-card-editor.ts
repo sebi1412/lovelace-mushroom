@@ -32,7 +32,7 @@ const computeSchema = memoizeOne(
           selector: { icon: {} },
           context: { icon_entity: "entity" },
         },
-        { name: "icon_color", selector: { mush_color: {} } },
+        { name: "icon_color", selector: { ui_color: {} } },
       ],
     },
     ...computeAppearanceFormSchema(customLocalize),

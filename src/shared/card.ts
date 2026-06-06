@@ -51,6 +51,7 @@ export class Card extends LitElement {
         min-width: 0;
       }
       .container.horizontal > ::slotted(*.actions) {
+        flex: none; 
         padding-top: 0 !important;
         padding-bottom: 0 !important;
         padding-left: 0 !important;
