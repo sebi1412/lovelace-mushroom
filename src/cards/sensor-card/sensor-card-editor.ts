@@ -1,36 +1,44 @@
 import { html, nothing } from "lit";
 import { customElement, state } from "lit/decorators.js";
+import memoizeOne from "memoize-one";
 import { assert } from "superstruct";
-import { LovelaceCardEditor, fireEvent } from "../../ha";
+import { LocalizeFunc, LovelaceCardEditor, fireEvent } from "../../ha";
 import setupCustomlocalize from "../../localize";
 import { computeActionsFormSchema } from "../../shared/config/actions-config";
-import { APPEARANCE_FORM_SCHEMA } from "../../shared/config/appearance-config";
+import { computeAppearanceFormSchema } from "../../shared/config/appearance-config";
 import { MushroomBaseElement } from "../../utils/base-element";
 import { GENERIC_LABELS } from "../../utils/form/generic-fields";
 import { HaFormSchema } from "../../utils/form/ha-form";
+import { computeNameSchema } from "../../utils/form/name-schema";
 import { loadHaComponents } from "../../utils/loader";
 import { SENSOR_CARD_EDITOR_NAME, SENSOR_ENTITY_DOMAINS } from "./const";
 import { SensorCardConfig, sensorCardConfigStruct } from "./sensor-card-config";
 
-const SCHEMA: HaFormSchema[] = [
-  { name: "entity", selector: { entity: { domain: SENSOR_ENTITY_DOMAINS} } },
-  { name: "second_Value", selector: { entity: { domain: SENSOR_ENTITY_DOMAINS} } },
-  { name: "name", selector: { text: {} } },
-  {
-    type: "grid",
-    name: "",
-    schema: [
-      {
-        name: "icon",
-        selector: { icon: {} },
-        context: { icon_entity: "entity" },
-      },
-      { name: "icon_color", selector: { mush_color: {} } },
-    ],
-  },
-  ...APPEARANCE_FORM_SCHEMA,
-  ...computeActionsFormSchema(),
-];
+const computeSchema = memoizeOne(
+  (
+    localize: LocalizeFunc,
+    customLocalize: LocalizeFunc,
+    version: string
+  ): HaFormSchema[] => [
+    { name: "entity", selector: { entity: { domain: SENSOR_ENTITY_DOMAINS } } },
+    { name: "second_Value", selector: { entity: { domain: SENSOR_ENTITY_DOMAINS } } },
+    computeNameSchema(version),
+    {
+      type: "grid",
+      name: "",
+      schema: [
+        {
+          name: "icon",
+          selector: { icon: {} },
+          context: { icon_entity: "entity" },
+        },
+        { name: "icon_color", selector: { mush_color: {} } },
+      ],
+    },
+    ...computeAppearanceFormSchema(customLocalize),
+    ...computeActionsFormSchema(),
+  ]
+);
 
 @customElement(SENSOR_CARD_EDITOR_NAME)
 export class EntityCardEditor
@@ -65,11 +73,18 @@ export class EntityCardEditor
       return nothing;
     }
 
+    const customLocalize = setupCustomlocalize(this.hass);
+    const schema = computeSchema(
+      this.hass!.localize,
+      customLocalize,
+      this.hass!.config.version
+    );
+
     return html`
       <ha-form
         .hass=${this.hass}
         .data=${this._config}
-        .schema=${SCHEMA}
+        .schema=${schema}
         .computeLabel=${this._computeLabel}
         @value-changed=${this._valueChanged}
       ></ha-form>
