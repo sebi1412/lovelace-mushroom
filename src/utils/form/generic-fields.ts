@@ -7,6 +7,7 @@ export const GENERIC_LABELS = [
   "secondary_info",
   "icon_type",
   "last_seen",
+  "second_Value",
   "content_info",
   "use_entity_picture",
   "collapsible_controls",

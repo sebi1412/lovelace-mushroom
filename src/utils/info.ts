@@ -9,6 +9,7 @@ export const INFOS = [
   "state",
   "last-changed",
   "last-updated",
+  "last-seen",
   "none",
 ] as const;
 export type Info = (typeof INFOS)[number];
@@ -67,6 +68,14 @@ export function computeInfoDisplay(
         ></ha-relative-time>
       `;
     case "last-updated":
+      return html`
+        <ha-relative-time
+          .hass=${hass}
+          .datetime=${stateObj.last_updated}
+          capitalize
+        ></ha-relative-time>
+      `;
+    case "last-seen":
       return html`
         <ha-relative-time
           .hass=${hass}

@@ -47,7 +47,9 @@
         "use_entity_picture": "Use entity picture?",
         "collapsible_controls": "Collapse controls when off",
         "picture": "Picture",
-        "picture_helper": "If set, it will replace the icon."
+        "picture_helper": "If set, it will replace the icon.",
+        "last_seen": "Last seen entity",
+        "second_Value": "Secondary entity"
       },
       "humidifier": {
         "show_target_humidity_control": "Humidity control?"
@@ -195,6 +197,7 @@
           "default": "Default information",
           "last-changed": "Last Changed",
           "last-updated": "Last Updated",
+          "last-seen": "Last Seen",
           "name": "Name",
           "none": "None",
           "state": "State"

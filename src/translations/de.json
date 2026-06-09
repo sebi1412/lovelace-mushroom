@@ -35,7 +35,9 @@
         "layout": "Layout",
         "primary_info": "Primäre Information",
         "secondary_info": "Sekundäre Information",
-        "use_entity_picture": "Entitätsbild verwenden?"
+        "use_entity_picture": "Entitätsbild verwenden?",
+        "last_seen": "Zuletzt gesehene Entität",
+        "second_Value": "Sekundäre Entität"
       },
       "humidifier": {
         "show_target_humidity_control": "Luftfeuchtigkeitssteuerung?"
@@ -167,6 +169,7 @@
           "default": "Standard-Information",
           "last-changed": "Letzte Änderung",
           "last-updated": "Letzte Aktualisierung",
+          "last-seen": "Zuletzt gesehen Entity",
           "name": "Name",
           "none": "Keine",
           "state": "Zustand"

@@ -114,7 +114,6 @@ export function computeAppearanceFormSchema(
             },
           },
         },
-        { name: "last_seen", selector: { entity: {} } },
       ],
     },
   ];

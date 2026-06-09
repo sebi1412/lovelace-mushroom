@@ -63,6 +63,17 @@ export class EntityCard
     handleAction(this, this.hass!, this._config!, ev.detail.action!);
   }
 
+  private _onControlTap(entityId: string, e: MouseEvent) {
+    e.stopPropagation();
+    this.dispatchEvent(
+      new CustomEvent("hass-more-info", {
+        detail: { entityId },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
   protected get _secondObj(): SensorEntity | undefined {
     if (!this._config || !this.hass || !this._config.entity || !this._config.second_Value) return undefined;
 
@@ -113,7 +124,7 @@ export class EntityCard
             ${this.renderBadge(stateObj)}
             ${this.renderStateInfo(stateObj, appearance, name)};
           </mushroom-state-item>
-           <div class="actions" ?rtl=${rtl}>
+           <div class="actions" ?rtl=${rtl} @click=${(e) => this._onControlTap(stateObj.entity_id, e)}>
             <mushroom-sensor-value-control
               .hass=${this.hass}
               .entity=${stateObj}
@@ -122,7 +133,7 @@ export class EntityCard
             </mushroom-sensor-value-control>
           </div>
           ${secondObj ? html`
-          <div class="actions" ?rtl=${rtl}>
+          <div class="actions" ?rtl=${rtl} @click=${(e) => this._onControlTap(secondObj.entity_id, e)}>
             <mushroom-sensor-value-control
               .hass=${this.hass}
               .entity=${secondObj}
@@ -176,6 +187,16 @@ export class EntityCard
         mushroom-sensor-value-control {
           flex: 1;
           min-width: 64px;
+          cursor: pointer;
+        }
+        .actions {
+          cursor: pointer;
+        }
+        .actions mushroom-sensor-value-control:hover {
+          opacity: 0.86;
+        }
+        .actions mushroom-sensor-value-control:active {
+          opacity: 0.72;
         }
       `,
     ];

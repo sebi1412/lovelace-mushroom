@@ -22,6 +22,7 @@ const computeSchema = memoizeOne(
   ): HaFormSchema[] => [
     { name: "entity", selector: { entity: { domain: SENSOR_ENTITY_DOMAINS } } },
     { name: "second_Value", selector: { entity: { domain: SENSOR_ENTITY_DOMAINS } } },
+    { name: "last_seen", selector: { entity: {} } },
     computeNameSchema(version),
     {
       type: "grid",
