@@ -42,24 +42,34 @@ export class MushroomButtonGroup extends LitElement {
         margin-left: var(--spacing);
       }
       .container > ::slotted(mushroom-button) {
-        width: 0;
         flex-grow: 0;
-        flex-shrink: 1;
+        flex-shrink: 0;
         flex-basis: calc(var(--control-height) * var(--control-button-ratio));
       }
-      .container > ::slotted(mushroom-output-number),
-      .container > ::slotted(mushroom-input-number) {
+      .container > ::slotted(mushroom-output-number) {
         width: 0;
-        flex-grow: 0;
+        flex-grow: 1;
         flex-shrink: 1;
         flex-basis: calc(
           var(--control-height) * var(--control-button-ratio) * 3
         );
       }
-      .container.fill > ::slotted(mushroom-button),
-      .container > ::slotted(mushroom-output-number),
-      .container.fill > ::slotted(mushroom-input-number) {
+      .container > ::slotted(mushroom-input-number) {
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: calc(
+          var(--control-height) * var(--control-button-ratio) * 3
+        );
+      }
+      .container.fill > ::slotted(mushroom-button) {
+        width: 0;
         flex-grow: 1;
+        flex-shrink: 1;
+      }
+      .container.fill > ::slotted(mushroom-input-number) {
+        width: 0;
+        flex-grow: 1;
+        flex-shrink: 1;
       }
     `;
   }
