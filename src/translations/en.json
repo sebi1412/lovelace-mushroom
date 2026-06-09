@@ -17,7 +17,9 @@
       },
       "climate": {
         "hvac_modes": "HVAC Modes",
-        "show_temperature_control": "Temperature control?"
+        "show_temperature_control": "Temperature control?",
+        "PIE": "Valve position entity",
+        "Window_Detect": "Window sensor entity"
       },
       "cover": {
         "show_buttons_control": "Control buttons?",

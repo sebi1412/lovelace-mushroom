@@ -9,7 +9,9 @@
       },
       "climate": {
         "hvac_modes": "HVAC-Modi",
-        "show_temperature_control": "Temperatursteuerung?"
+        "show_temperature_control": "Temperatursteuerung?",
+        "PIE": "Ventilstellungs-Entität",
+        "Window_Detect": "Fenstersensor-Entität"
       },
       "cover": {
         "show_buttons_control": "Schaltflächensteuerung?",
